@@ -13,6 +13,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Auth::routes();
+
+Route::get('admin', 'backend\HomeController@index')->name('home');
+Route::group(["prefix"=>"admin","middleware"=>"auth"], function(){
+    //logout
+    Route::get("logout",function(){
+        Auth::logout();
+        return redirect(url("login"));
+    });
+
+
 });
